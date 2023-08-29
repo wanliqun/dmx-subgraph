@@ -1,0 +1,26 @@
+specVersion: 0.0.4
+description: DMX - decentralized exchange
+repository: https://github.com/dmxlab/dmx-subgraph
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: DEX
+    network: mainnet
+    source:
+      address: "0x8cD33e369434e6CE4115fff50AD0a117a46B257E"
+      abi: DEX
+      startBlock: 135524205
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Purchase
+      abis:
+        - name: DEX
+          file: DEX/abis/DEX.json
+      eventHandlers:
+        - event: Buy(indexed address,indexed uint256,uint256)
+          handler: handleBuy
+      file: DEX/DEX.wasm

@@ -1,0 +1,15 @@
+# DEX purchase record
+type Purchase @entity(immutable: true) {
+  # format: hash(<block hash><transaction hash><log index>)
+  id: ID!
+  # buyer address
+  buyer: Bytes!
+  # token pair ID
+  pairID: BigInt!
+  # purchase amount
+  amount: BigDecimal!
+  # txn hash
+  txnHash:  Bytes!
+  # created timestamp
+  createdAt: BigInt!
+}

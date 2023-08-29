@@ -1,0 +1,77 @@
+version: '3'
+services:
+  index-node:
+    image: graphprotocol/graph-node
+    ports:
+      - '8000:8000'
+      - '8001:8001'
+      - '8020:8020'
+      - '8030:8030'
+      - '8040:8040'
+    depends_on:
+      - ipfs
+      - postgres
+    environment:
+      postgres_host: postgres
+      postgres_user: graph-node
+      postgres_pass: let-me-in
+      postgres_db: graph-node
+      ipfs: 'ipfs:5001'
+      # Change next line if you want to connect to a different JSON-RPC endpoint
+      ethereum: 'mainnet:https://evmtestnet.confluxrpc.com/'
+      node_role: index-node
+      node_id: index_node_general_0
+      #ethereum_polling_interval=200 # in ms
+      BLOCK_INGESTOR: index_node_general_0
+      GRAPH_LOG: info
+      GRAPH_LOG_QUERY_TIMING: sql,gql,cache
+      STORE_CONNECTION_POOL_SIZE: 10
+    #volumes: # for graphman use
+    #  - ./config-general.toml:/config.toml
+    container_name: index-node
+  query-node:
+    image: graphprotocol/graph-node
+    ports:
+      - '9000:8000'
+      - '9001:8001'
+      - '9020:8020'
+      - '9030:8030'
+      - '9040:8040'
+    depends_on:
+      - ipfs
+      - postgres
+    environment:
+      postgres_host: postgres
+      postgres_user: graph-node
+      postgres_pass: let-me-in
+      postgres_db: graph-node
+      ipfs: 'ipfs:5001'
+      # Change next line if you want to connect to a different JSON-RPC endpoint
+      ethereum: 'mainnet:https://evmtestnet.confluxrpc.com/'
+      node_role: query-node
+      node_id: query_node_general_0
+      GRAPH_LOG: info
+      #GRAPH_LOG_QUERY_TIMING: sql,gql,cache
+      STORE_CONNECTION_POOL_SIZE: 10
+    container_name: query-node
+  ipfs:
+    image: ipfs/go-ipfs:v0.10.0
+    ports:
+      - '5001:5001'
+    volumes:
+      - ./data/ipfs:/data/ipfs
+    container_name: ipfs
+  postgres:
+    image: postgres
+    ports:
+      - '5432:5432'
+    command: ["postgres", "-cshared_preload_libraries=pg_stat_statements"]
+    environment:
+      POSTGRES_USER: graph-node
+      POSTGRES_PASSWORD: let-me-in
+      POSTGRES_DB: graph-node
+      PGDATA: "/var/lib/postgresql/data"
+      POSTGRES_INITDB_ARGS: "-E UTF8 --locale=C"
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    container_name: postgres
