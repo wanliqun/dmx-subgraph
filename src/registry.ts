@@ -36,7 +36,7 @@ export function handleBlock(b: ethereum.Block): void {
     mLaunchpad.idoType = launchpad[1]
     mLaunchpad.save()
 
-    log.info("Creating new launchpad data source: {}", [launchpad[0]])
+    log.info("Creating new launchpad data source: {}", [addr.toHexString()])
     Launchpad.create(addr)
   }
 
