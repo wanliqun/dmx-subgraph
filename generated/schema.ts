@@ -11,6 +11,63 @@ import {
   BigDecimal
 } from "@graphprotocol/graph-ts";
 
+export class Launchpad extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Launchpad entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type Launchpad must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("Launchpad", id.toString(), this);
+    }
+  }
+
+  static loadInBlock(id: string): Launchpad | null {
+    return changetype<Launchpad | null>(store.get_in_block("Launchpad", id));
+  }
+
+  static load(id: string): Launchpad | null {
+    return changetype<Launchpad | null>(store.get("Launchpad", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toString();
+    }
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get idoType(): string | null {
+    let value = this.get("idoType");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set idoType(value: string | null) {
+    if (!value) {
+      this.unset("idoType");
+    } else {
+      this.set("idoType", Value.fromString(<string>value));
+    }
+  }
+}
+
 export class Purchase extends Entity {
   constructor(id: string) {
     super();
@@ -48,6 +105,19 @@ export class Purchase extends Entity {
 
   set id(value: string) {
     this.set("id", Value.fromString(value));
+  }
+
+  get launchpad(): string {
+    let value = this.get("launchpad");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toString();
+    }
+  }
+
+  set launchpad(value: string) {
+    this.set("launchpad", Value.fromString(value));
   }
 
   get buyer(): Bytes {

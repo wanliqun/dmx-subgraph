@@ -19,7 +19,7 @@ dataSources:
         - Purchase
       abis:
         - name: Registry
-          file: Registry/abis/registry.json
+          file: Registry/abis/Registry.json
       eventHandlers:
         - event: Registered(indexed address,address,uint256)
           handler: handleRegistered
@@ -41,7 +41,7 @@ templates:
         - Purchase
       abis:
         - name: Launchpad
-          file: Launchpad/abis/launchpad.json
+          file: Launchpad/abis/Launchpad.json
       eventHandlers:
         - event: Buy(indexed address,indexed uint256,uint256)
           handler: handleBuy

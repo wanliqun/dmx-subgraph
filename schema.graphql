@@ -1,7 +1,21 @@
-# Launchpad purchase record
+# IDO type: 1 - fixed price, 2 - batch auction
+enum IdoType {
+  FixedPrice
+  BatchAuction
+}
+
+# Launchpad
+type Launchpad @entity(immutable: false) {
+  id: ID!
+  idoType: IdoType
+}
+
+# Purchase record
 type Purchase @entity(immutable: false) {
   # format: <transaction hash><log index>
   id: ID!
+  # Launchpad contract address
+  launchpad: Launchpad!
   # buyer address
   buyer: Bytes!
   # token pair ID
