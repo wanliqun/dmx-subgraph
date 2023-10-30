@@ -5,12 +5,12 @@ schema:
   file: schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: DEX
+    name: Registry
     network: mainnet
     source:
-      address: "0x8cD33e369434e6CE4115fff50AD0a117a46B257E"
-      abi: DEX
-      startBlock: 135524205
+      address: "0xc04c3cb7eccfe3aaecafba4d13a0dc7ef74a83e0"
+      abi: Registry
+      startBlock: 143646800
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -18,9 +18,30 @@ dataSources:
       entities:
         - Purchase
       abis:
-        - name: DEX
-          file: DEX/abis/DEX.json
+        - name: Registry
+          file: Registry/abis/registry.json
+      eventHandlers:
+        - event: Registered(indexed address,address,uint256)
+          handler: handleRegistered
+      blockHandlers:
+        - handler: handleBlock
+      file: Registry/Registry.wasm
+templates:
+  - kind: ethereum/contract
+    name: Launchpad
+    network: mainnet
+    source:
+      abi: Launchpad
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: templates/Launchpad/Launchpad.wasm
+      entities:
+        - Purchase
+      abis:
+        - name: Launchpad
+          file: Launchpad/abis/launchpad.json
       eventHandlers:
         - event: Buy(indexed address,indexed uint256,uint256)
           handler: handleBuy
-      file: DEX/DEX.wasm

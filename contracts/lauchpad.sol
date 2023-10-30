@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.9;
+pragma solidity ^0.8.19;
 
 // Import this file to use console.log
 import "hardhat/console.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract DEX is Ownable {
+contract Launchpad is Ownable {
     event Buy(address indexed buyer, uint256 indexed id, uint256 amountIn);
 
     uint256 tokenId = 1;

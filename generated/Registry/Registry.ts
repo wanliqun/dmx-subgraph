@@ -10,32 +10,6 @@ import {
   BigInt
 } from "@graphprotocol/graph-ts";
 
-export class Buy extends ethereum.Event {
-  get params(): Buy__Params {
-    return new Buy__Params(this);
-  }
-}
-
-export class Buy__Params {
-  _event: Buy;
-
-  constructor(event: Buy) {
-    this._event = event;
-  }
-
-  get buyer(): Address {
-    return this._event.parameters[0].value.toAddress();
-  }
-
-  get id(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
-  }
-
-  get amountIn(): BigInt {
-    return this._event.parameters[2].value.toBigInt();
-  }
-}
-
 export class OwnershipTransferred extends ethereum.Event {
   get params(): OwnershipTransferred__Params {
     return new OwnershipTransferred__Params(this);
@@ -58,9 +32,35 @@ export class OwnershipTransferred__Params {
   }
 }
 
-export class DEX extends ethereum.SmartContract {
-  static bind(address: Address): DEX {
-    return new DEX("DEX", address);
+export class Registered extends ethereum.Event {
+  get params(): Registered__Params {
+    return new Registered__Params(this);
+  }
+}
+
+export class Registered__Params {
+  _event: Registered;
+
+  constructor(event: Registered) {
+    this._event = event;
+  }
+
+  get operator(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get launchpad(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+
+  get idoType(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
+}
+
+export class Registry extends ethereum.SmartContract {
+  static bind(address: Address): Registry {
+    return new Registry("Registry", address);
   }
 
   owner(): Address {
@@ -79,70 +79,32 @@ export class DEX extends ethereum.SmartContract {
   }
 }
 
-export class AddCall extends ethereum.Call {
-  get inputs(): AddCall__Inputs {
-    return new AddCall__Inputs(this);
+export class RegisterCall extends ethereum.Call {
+  get inputs(): RegisterCall__Inputs {
+    return new RegisterCall__Inputs(this);
   }
 
-  get outputs(): AddCall__Outputs {
-    return new AddCall__Outputs(this);
+  get outputs(): RegisterCall__Outputs {
+    return new RegisterCall__Outputs(this);
   }
 }
 
-export class AddCall__Inputs {
-  _call: AddCall;
+export class RegisterCall__Inputs {
+  _call: RegisterCall;
 
-  constructor(call: AddCall) {
+  constructor(call: RegisterCall) {
     this._call = call;
   }
 
-  get token(): Address {
+  get launchpad(): Address {
     return this._call.inputValues[0].value.toAddress();
   }
 }
 
-export class AddCall__Outputs {
-  _call: AddCall;
+export class RegisterCall__Outputs {
+  _call: RegisterCall;
 
-  constructor(call: AddCall) {
-    this._call = call;
-  }
-}
-
-export class BuyCall extends ethereum.Call {
-  get inputs(): BuyCall__Inputs {
-    return new BuyCall__Inputs(this);
-  }
-
-  get outputs(): BuyCall__Outputs {
-    return new BuyCall__Outputs(this);
-  }
-}
-
-export class BuyCall__Inputs {
-  _call: BuyCall;
-
-  constructor(call: BuyCall) {
-    this._call = call;
-  }
-
-  get buyer(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-
-  get token(): Address {
-    return this._call.inputValues[1].value.toAddress();
-  }
-
-  get amount(): BigInt {
-    return this._call.inputValues[2].value.toBigInt();
-  }
-}
-
-export class BuyCall__Outputs {
-  _call: BuyCall;
-
-  constructor(call: BuyCall) {
+  constructor(call: RegisterCall) {
     this._call = call;
   }
 }

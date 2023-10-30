@@ -1,6 +1,6 @@
-# DEX purchase record
-type Purchase @entity(immutable: true) {
-  # format: hash(<block hash><transaction hash><log index>)
+# Launchpad purchase record
+type Purchase @entity(immutable: false) {
+  # format: <transaction hash><log index>
   id: ID!
   # buyer address
   buyer: Bytes!
@@ -9,7 +9,16 @@ type Purchase @entity(immutable: true) {
   # purchase amount
   amount: BigDecimal!
   # txn hash
-  txnHash:  Bytes!
-  # created timestamp
-  createdAt: BigInt!
+  txnHash: Bytes!
+  # block hash
+  blockHash: Bytes!
+  # block number
+  blockNumber: BigInt!
+  # block timestamp
+  blockTimestamp: BigInt!
+}
+
+# Bootstrap flag to load data source templates accordingly.
+type Bootstrap @entity(immutable: false)  {
+  id: ID!
 }

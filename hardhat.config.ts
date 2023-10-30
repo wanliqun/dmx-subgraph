@@ -14,7 +14,7 @@ const config: HardhatUserConfig = {
     // The output directory for the ABI files
     path: "./abis",
     // The contracts to include or exclude from the export
-    only: ["DEX"],
+    only: ["lauchpad", "registry"],
     // The formatting options for the ABI files
     clear: true,
     flat: true,
