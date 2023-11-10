@@ -9,6 +9,7 @@ import { Address, BigDecimal, Bytes, ethereum, log } from '@graphprotocol/graph-
 const whiteListLaunchpads: string[][] = [
     ['0xbc96ff22f1c501aa57451d86d28c552975039251', "FixedPrice"],
     ['0xe91e74f9ba267ce75b823a1032d355dc101fad33', "BatchAuction"],
+    ['0x2c330cc343a0f04e89c3dc9efd7beace563be002', "FixedPrice"]
 ]
 
 export function handleRegistered(r: Registered): void {
