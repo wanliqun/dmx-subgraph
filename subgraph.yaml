@@ -8,9 +8,9 @@ dataSources:
     name: Registry
     network: mainnet
     source:
-      address: '0xc04c3cb7eccfe3aaecafba4d13a0dc7ef74a83e0'
+      address: '0x59a915408561d4724ba50312fe41f46062035c12'
       abi: Registry
-      startBlock: 143646800
+      startBlock: 146709305
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -23,8 +23,6 @@ dataSources:
       eventHandlers:
         - event: Registered(indexed address,address,uint256)
           handler: handleRegistered
-      blockHandlers:
-        - handler: handleBlock
       file: ./src/registry.ts
 templates:
   - kind: ethereum/contract

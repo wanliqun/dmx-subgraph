@@ -31,8 +31,3 @@ type Purchase @entity(immutable: false) {
   # block timestamp
   blockTimestamp: BigInt!
 }
-
-# Bootstrap flag to load data source templates accordingly.
-type Bootstrap @entity(immutable: false)  {
-  id: ID!
-}
